@@ -4,6 +4,11 @@ namespace tc
 {
 	public class Manager : MonoBehaviour
 	{
+		public int Number = 10;
+		public float RealNumber = 0.5f;
+		public bool Flag = true;
+		public string Message = "Hello World!";
+
 		// Use this for initialization
 		void Start()
 		{
