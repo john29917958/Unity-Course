@@ -13,6 +13,21 @@ namespace tc
 		void Start()
 		{
 			Debug.Log("Program starts");
+
+			Number = 3 + 7;
+			Number = 15 - 5;
+			Number = 5 * 2;
+			Number = 20 / 2;
+			Number = 110 % 100;
+
+			Number += 5;
+			Number -= 5;
+			Number *= 5;
+			Number /= 5;
+			Number %= 3;
+
+			Number++;
+			Number--;
 		}
 
 		// Update is called once per frame
