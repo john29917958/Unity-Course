@@ -27,11 +27,11 @@ namespace TC
 		{
 			if (string.IsNullOrEmpty(Input.text))
 			{
-				Debug.Log("You didn't enter anyting!");
+				Text.text = "Nothing is entered!";
 			}
 			else
 			{
-				Debug.Log(Input.text);
+				Text.text = Input.text;
 			}
 
 			Image.sprite = Logo;
