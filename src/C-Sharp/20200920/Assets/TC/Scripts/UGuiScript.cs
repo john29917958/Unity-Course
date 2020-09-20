@@ -5,16 +5,22 @@ namespace TC
 {
 	public class UGUIScript : MonoBehaviour
 	{
-		public Button Button;
+		public Button[] Buttons;
 		public Image Image;
 		public Text Text;
-		public InputField Input;
-		public Sprite Logo;
+		public InputField NameInput;
 
 		// Use this for initialization
 		void Start()
 		{
-			Button.onClick.AddListener(OnButtonClicked);
+			foreach(Button button in Buttons)
+			{
+				button.onClick.AddListener(delegate ()
+				{
+					Text text = button.gameObject.GetComponentInChildren<Text>();
+					OnButtonClicked(text.text);
+				});
+			}
 		}
 
 		// Update is called once per frame
@@ -23,18 +29,16 @@ namespace TC
 
 		}
 
-		private void OnButtonClicked()
+		private void OnButtonClicked(string buttonText)
 		{
-			if (string.IsNullOrEmpty(Input.text))
+			if (string.IsNullOrEmpty(NameInput.text))
 			{
-				Text.text = "Nothing is entered!";
+				Text.text = "Unknown - " + buttonText;
 			}
 			else
 			{
-				Text.text = Input.text;
+				Text.text = NameInput.text + " - " + buttonText;
 			}
-
-			Image.sprite = Logo;
 		}
 	}
 }
