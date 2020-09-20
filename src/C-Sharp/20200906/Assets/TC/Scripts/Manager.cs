@@ -38,7 +38,7 @@ namespace tc
 		// Update is called once per frame
 		void Update()
 		{
-			//Debug.Log("Program updates");
+			Debug.Log("Program updates");
 		}
 
 		private void PerformsBasicCalculations()
