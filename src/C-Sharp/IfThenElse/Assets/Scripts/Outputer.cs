@@ -9,11 +9,6 @@ public class Outputer : MonoBehaviour {
 	public bool ShouldCountDownward = false;
 
 	private bool _isIncreasing = true;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
 	
 	// Update is called once per frame
 	void Update () {
