@@ -2,7 +2,7 @@
 
 namespace TC
 {
-	public class UGuiScript : MonoBehaviour
+	public class UGUIScript : MonoBehaviour
 	{
 
 		// Use this for initialization
