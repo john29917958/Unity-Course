@@ -9,6 +9,7 @@ namespace TC
 		public Image Image;
 		public Text Text;
 		public InputField Input;
+		public Sprite Logo;
 
 		// Use this for initialization
 		void Start()
@@ -32,6 +33,8 @@ namespace TC
 			{
 				Debug.Log(Input.text);
 			}
+
+			Image.sprite = Logo;
 		}
 	}
 }
