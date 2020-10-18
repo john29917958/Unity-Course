@@ -13,6 +13,7 @@ public class PrintStars : MonoBehaviour {
 		PrintStars5();
 		PrintStars6();
 		PrintStars7();
+		PrintStars8();
 	}
 
 	private void PrintStars1()
@@ -198,13 +199,18 @@ public class PrintStars : MonoBehaviour {
 	private void PrintStars7()
 	{
 		string message = string.Empty;
-		for (int i = 0; i < Size; i++)
+		int lineCount = 0;
+		bool isEnded = false;
+
+		while (!isEnded)
 		{
+			int starCount = 0;
 			for (int j = 0; j < Size; j++)
 			{
-				if (Math.Abs(j - Size/2) <= i)
+				if (Math.Abs(j - Size/2) <= lineCount)
 				{
 					message += '★';
+					starCount += 1;
 				}
 				else
 				{
@@ -212,7 +218,51 @@ public class PrintStars : MonoBehaviour {
 				}
 			}
 
+			if (starCount >= Size) isEnded = true;
+			lineCount += 1;
 			message += Environment.NewLine;
+		}
+
+		Debug.Log(message);
+	}
+
+	private void PrintStars8()
+	{
+		string message = string.Empty;
+
+		int lineCount = 0;
+		bool isEnded = false;
+
+		while (!isEnded)
+		{
+			int starCount = 0;
+
+			for (int i = 0; i < Size; i++)
+			{
+				starCount = Size - i * 2;
+				int blankCount = Size - starCount;
+				int sideBlankCount = blankCount / 2;
+
+				for (int j = 0; j < sideBlankCount; j++)
+				{
+					message += "  ";
+				}
+
+				for (int j = 0; j < starCount; j++)
+				{
+					message += '★';
+				}
+
+				for (int j = 0; j < sideBlankCount; j++)
+				{
+					message += "  ";
+				}
+
+				message += Environment.NewLine;
+			}
+			
+			if (starCount <= 1) isEnded = true;
+			lineCount += 1;			
 		}
 
 		Debug.Log(message);
