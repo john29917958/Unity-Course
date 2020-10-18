@@ -32,18 +32,12 @@ public class Manager : MonoBehaviour {
 			_targetTime = UnityEngine.Random.Range(5, 15);
 
 			RefreshMessage();
-
-			//ChallengedCount.text = string.Format("遊戲次數：{0}", _challengedCount);
 		}
 		else if (Input.GetKey(ActivationKey))
 		{
 			_counter += Time.deltaTime;
 
 			RefreshMessage(string.Format("請放開鍵盤 {0} - 停止", ActivationKey.ToString()), false);
-
-			//Counter.text = string.Format("請心理計時 " + _targetTime + " 秒後放開");
-			//TargetTime.text = string.Format("目標時間：{0}", _targetTime);
-			//Message.text = string.Format("請放開鍵盤 {0} - 停止", ActivationKey.ToString());
 		}
 		else if (Input.GetKeyUp(ActivationKey))
 		{
@@ -58,11 +52,6 @@ public class Manager : MonoBehaviour {
 			if (_health == 0) _isEnded = true;
 
 			RefreshMessage(string.Format("與目標秒差：{0}" + (_isEnded ? " (遊戲結束)" : string.Empty), diff));
-
-			//Health.text = string.Format("玩家血量：{0}", _health);
-			//Counter.text = string.Format("計時器：{0}", Math.Round(_counter));
-			//TargetTime.text = string.Format("目標時間：{0}", _targetTime);
-			//Message.text = string.Format("與目標秒差：{0}" + (_isEnded ? " (遊戲結束)" : string.Empty), diff);
 		}
 		else
 		{
@@ -79,12 +68,6 @@ public class Manager : MonoBehaviour {
 		_targetTime = 10;
 
 		RefreshMessage(string.Format("請按住鍵盤 {0} - 開始", ActivationKey.ToString()));
-
-		//Health.text = string.Format("玩家血量：{0}", _health);
-		//ChallengedCount.text = string.Format("遊戲次數：{0}", _challengedCount);
-		//Counter.text = string.Format("計時器：{0}", _counter);
-		//TargetTime.text = string.Format("目標時間：{0}", _targetTime);
-		//Message.text = string.Format("請按住鍵盤 {0} - 開始", ActivationKey.ToString());
 	}
 
 	private void RefreshMessage(string message = null, bool updateCounter = true)
