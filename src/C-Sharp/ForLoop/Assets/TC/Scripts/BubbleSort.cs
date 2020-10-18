@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Hard1 : MonoBehaviour {
+public class BubbleSort : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
