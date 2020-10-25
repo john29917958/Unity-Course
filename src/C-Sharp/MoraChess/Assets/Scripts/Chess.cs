@@ -11,6 +11,7 @@ public class Chess : MonoBehaviour {
 	public Players Owner;
 
 	public bool IsFrezzed;
+	public bool IsDead;
 
 	public Text NameDescription;
 	public Grid Grid;

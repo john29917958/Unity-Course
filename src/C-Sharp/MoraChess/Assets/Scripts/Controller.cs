@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Controller : MonoBehaviour {
@@ -8,10 +9,23 @@ public class Controller : MonoBehaviour {
 	public RoundPhases Phase;
 	public Chess ActionChess;
 
+	public List<Queue> Queues = new List<Queue>();
+
 	public void OnClick(Grid grid)
 	{
 		if (Phase == RoundPhases.Action)
 		{
+			if (ActionChess.IsDead)
+			{				
+				foreach (Queue queue in Queues)
+				{
+					if (queue.Owner == RoundOwner) queue.ReviveChess(ActionChess, grid);					
+				}
+
+				SwitchRound();
+				return;
+			}
+
 			if (!IsMoveDirectionValid(ActionChess.Grid, grid, ActionChess.AvailableMovementDirections))
 			{
 				Debug.Log("Invalid direction");
@@ -19,7 +33,6 @@ public class Controller : MonoBehaviour {
 			}
 
 			MoveChess(ActionChess, grid);
-
 			SwitchRound();
 		}
 	}
@@ -42,9 +55,11 @@ public class Controller : MonoBehaviour {
 
 				if (chess.Name != ActionChess.Name)
 				{
-					//TODO: Adds chess queue.
-					Destroy(chess.gameObject);
-				}				
+					foreach (Queue queue in Queues)
+					{
+						if (queue.Owner != chess.Owner) queue.AssignChess(chess);
+					}
+				}	
 
 				SwitchRound();
 			}
