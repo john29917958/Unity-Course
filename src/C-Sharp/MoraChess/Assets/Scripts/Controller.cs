@@ -19,10 +19,7 @@ public class Controller : MonoBehaviour {
 				return;
 			}
 
-			ActionChess.Grid.Chesses.Remove(ActionChess);
-			ActionChess.Grid = grid;
-			grid.Chesses.Add(ActionChess);
-			ActionChess.gameObject.transform.position = grid.gameObject.transform.position;
+			MoveChess(ActionChess, grid);
 
 			SwitchRound();
 		}
@@ -42,8 +39,14 @@ public class Controller : MonoBehaviour {
 		{
 			if (IsMoveDirectionValid(ActionChess.Grid, chess.Grid, ActionChess.AvailableMovementDirections))
 			{
-				Debug.Log("Attack");
-				//TODO: Checks and attacks enemy.
+				MoveChess(ActionChess, chess.Grid);
+
+				if (chess.Name != ActionChess.Name)
+				{
+					//TODO: Adds chess queue.
+					Destroy(chess.gameObject);
+				}				
+
 				SwitchRound();
 			}
 			else
@@ -99,5 +102,13 @@ public class Controller : MonoBehaviour {
 		}
 
 		return false;
+	}
+
+	private void MoveChess(Chess chess, Grid grid)
+	{
+		chess.Grid.Chesses.Remove(chess);
+		chess.Grid = grid;
+		grid.Chesses.Add(chess);
+		chess.gameObject.transform.position = grid.gameObject.transform.position;
 	}
 }
