@@ -9,11 +9,13 @@ public class Controller : MonoBehaviour {
 
 	public void OnClick(Grid grid)
 	{
-		Debug.Log("On Grid Clicked");
-
 		if (Phase == RoundPhases.Action)
 		{
-			Debug.Log("Moves chess");
+			if (!IsMoveDirectionValid(ActionChess, grid))
+			{
+				Debug.Log("Invalid direction");
+				return;
+			}
 
 			ActionChess.Grid.Chesses.Remove(ActionChess);
 			ActionChess.Grid = grid;
@@ -26,8 +28,6 @@ public class Controller : MonoBehaviour {
 
 	public void OnClick(Chess chess)
 	{
-		Debug.Log("On Chess Clicked");
-
 		if (chess.Owner == RoundOwner)
 		{
 			Debug.Log("Set action chess");
@@ -54,8 +54,42 @@ public class Controller : MonoBehaviour {
 		
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
+	private bool IsMoveDirectionValid(Chess chess, Grid target)
+	{
+		foreach (Directions direction in chess.AvailableMovementDirections)
+		{
+			switch (direction)
+			{
+				case Directions.Up:
+					if (target.Row + 1 == chess.Grid.Row && target.Column == chess.Grid.Column) return true;
+					break;
+				case Directions.Down:
+					if (target.Row - 1 == chess.Grid.Row && target.Column == chess.Grid.Column) return true;
+					break;
+				case Directions.Left:
+					if (target.Row == chess.Grid.Row && target.Column + 1 == chess.Grid.Column) return true;
+					break;
+				case Directions.Right:
+					if (target.Row == chess.Grid.Row && target.Column - 1 == chess.Grid.Column) return true;
+					break;
+				case Directions.LeftUp:
+					Debug.Log(string.Format("Left up. Chess: {0}, {1}. Grid: {2}, {3}", chess.Grid.Row, chess.Grid.Column, target.Row, target.Column));
+					if (target.Row + 1 == chess.Grid.Row && target.Column + 1 == chess.Grid.Column) return true;
+					break;
+				case Directions.RightUp:
+					if (target.Row + 1 == chess.Grid.Row && target.Column - 1 == chess.Grid.Column) return true;
+					break;
+				case Directions.LeftDown:
+					if (target.Row - 1 == chess.Grid.Row && target.Column + 1 == chess.Grid.Column) return true;
+					break;
+				case Directions.RightDown:
+					if (target.Row - 1 == chess.Grid.Row && target.Column - 1 == chess.Grid.Column) return true;
+					break;
+				default:
+					break;
+			}
+		}
+
+		return false;
 	}
 }

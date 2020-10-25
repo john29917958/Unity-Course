@@ -3,8 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Chess : MonoBehaviour {
-	public enum Names { King, Paper, Sisers, Stone }
-	public enum Directions { Left, Right, Up, Down, LeftUp, RightUp, LeftDown, RightDown }
+	public enum Names { King, Paper, Sisers, Stone }	
 
 	public Controller GameManager;
 
