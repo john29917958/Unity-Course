@@ -13,19 +13,20 @@ public class Controller : MonoBehaviour {
 
 	public void OnClick(Grid grid)
 	{
-		if (Phase == RoundPhases.Action)
-		{
-			if (ActionChess.IsDead)
-			{				
-				foreach (Queue queue in Queues)
-				{
-					if (queue.Owner == RoundOwner) queue.ReviveChess(ActionChess, grid);					
-				}
+		if (Phase != RoundPhases.Action) return;
 
-				SwitchRound();
-				return;
+		if (ActionChess.IsDead)
+		{
+			foreach (Queue queue in Queues)
+			{
+				if (queue.Owner == RoundOwner) queue.ReviveChess(ActionChess, grid);
 			}
 
+			SwitchRound();
+			return;
+		}
+		else
+		{
 			if (!IsMoveDirectionValid(ActionChess.Grid, grid, ActionChess.AvailableMovementDirections))
 			{
 				Debug.Log("Invalid direction");
@@ -41,7 +42,6 @@ public class Controller : MonoBehaviour {
 	{
 		if (chess.Owner == RoundOwner)
 		{
-			Debug.Log("Set action chess");
 			ActionChess = chess;
 			Phase = RoundPhases.Action;
 			return;
@@ -57,7 +57,7 @@ public class Controller : MonoBehaviour {
 				{
 					foreach (Queue queue in Queues)
 					{
-						if (queue.Owner != chess.Owner) queue.AssignChess(chess);
+						if (queue.Owner == RoundOwner) queue.AssignChess(chess);
 					}
 				}	
 

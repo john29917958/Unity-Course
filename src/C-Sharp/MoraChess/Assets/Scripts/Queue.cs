@@ -15,7 +15,7 @@ public class Queue : MonoBehaviour {
 				chess.Grid.Chesses.Remove(chess);
 				chess.Grid = null;
 				chess.IsDead = true;
-				chess.Owner = chess.Owner == Players.Player1 ? Players.Player2 : Players.Player1;
+				chess.SetOwner(chess.Owner == Players.Player1 ? Players.Player2 : Players.Player1);
 				chess.gameObject.transform.position = SlotPositions[i].transform.position;
 				return true;
 			}
