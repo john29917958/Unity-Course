@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class Controller : MonoBehaviour {
 	public enum RoundPhases { SetActionChess, Action }
@@ -11,7 +13,7 @@ public class Controller : MonoBehaviour {
 	{
 		if (Phase == RoundPhases.Action)
 		{
-			if (!IsMoveDirectionValid(ActionChess, grid))
+			if (!IsMoveDirectionValid(ActionChess.Grid, grid, ActionChess.AvailableMovementDirections))
 			{
 				Debug.Log("Invalid direction");
 				return;
@@ -38,9 +40,16 @@ public class Controller : MonoBehaviour {
 
 		if (Phase == RoundPhases.Action && chess.Owner != RoundOwner)
 		{
-			Debug.Log("Attack");
-			//TODO: Checks and attacks enemy.
-			SwitchRound();
+			if (IsMoveDirectionValid(ActionChess.Grid, chess.Grid, ActionChess.AvailableMovementDirections))
+			{
+				Debug.Log("Attack");
+				//TODO: Checks and attacks enemy.
+				SwitchRound();
+			}
+			else
+			{
+				Debug.Log("Invalid attack direction");
+			}
 		}
 	}
 
@@ -54,36 +63,35 @@ public class Controller : MonoBehaviour {
 		
 	}
 	
-	private bool IsMoveDirectionValid(Chess chess, Grid target)
+	private bool IsMoveDirectionValid(Grid chessGrid, Grid target, List<Directions> validDirections)
 	{
-		foreach (Directions direction in chess.AvailableMovementDirections)
+		foreach (Directions direction in validDirections)
 		{
 			switch (direction)
 			{
 				case Directions.Up:
-					if (target.Row + 1 == chess.Grid.Row && target.Column == chess.Grid.Column) return true;
+					if (target.Row + 1 == chessGrid.Row && target.Column == chessGrid.Column) return true;
 					break;
 				case Directions.Down:
-					if (target.Row - 1 == chess.Grid.Row && target.Column == chess.Grid.Column) return true;
+					if (target.Row - 1 == chessGrid.Row && target.Column == chessGrid.Column) return true;
 					break;
 				case Directions.Left:
-					if (target.Row == chess.Grid.Row && target.Column + 1 == chess.Grid.Column) return true;
+					if (target.Row == chessGrid.Row && target.Column + 1 == chessGrid.Column) return true;
 					break;
 				case Directions.Right:
-					if (target.Row == chess.Grid.Row && target.Column - 1 == chess.Grid.Column) return true;
+					if (target.Row == chessGrid.Row && target.Column - 1 == chessGrid.Column) return true;
 					break;
 				case Directions.LeftUp:
-					Debug.Log(string.Format("Left up. Chess: {0}, {1}. Grid: {2}, {3}", chess.Grid.Row, chess.Grid.Column, target.Row, target.Column));
-					if (target.Row + 1 == chess.Grid.Row && target.Column + 1 == chess.Grid.Column) return true;
+					if (target.Row + 1 == chessGrid.Row && target.Column + 1 == chessGrid.Column) return true;
 					break;
 				case Directions.RightUp:
-					if (target.Row + 1 == chess.Grid.Row && target.Column - 1 == chess.Grid.Column) return true;
+					if (target.Row + 1 == chessGrid.Row && target.Column - 1 == chessGrid.Column) return true;
 					break;
 				case Directions.LeftDown:
-					if (target.Row - 1 == chess.Grid.Row && target.Column + 1 == chess.Grid.Column) return true;
+					if (target.Row - 1 == chessGrid.Row && target.Column + 1 == chessGrid.Column) return true;
 					break;
 				case Directions.RightDown:
-					if (target.Row - 1 == chess.Grid.Row && target.Column - 1 == chess.Grid.Column) return true;
+					if (target.Row - 1 == chessGrid.Row && target.Column - 1 == chessGrid.Column) return true;
 					break;
 				default:
 					break;
