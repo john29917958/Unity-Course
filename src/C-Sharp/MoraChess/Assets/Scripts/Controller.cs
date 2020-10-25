@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Controller : MonoBehaviour {
@@ -58,7 +57,9 @@ public class Controller : MonoBehaviour {
 
 	public void SwitchRound()
 	{
-
+		RoundOwner = RoundOwner == Players.Player1 ? Players.Player2 : Players.Player1;
+		ActionChess = null;
+		Phase = RoundPhases.SetActionChess;
 	}
 
 	// Use this for initialization
