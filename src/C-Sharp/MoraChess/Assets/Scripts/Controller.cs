@@ -65,10 +65,10 @@ public class Controller : MonoBehaviour {
 						GameOverText.SetActive(true);
 					}
 				}
-				//else
-				//{
-				//	chess.IsFrezzed = true;
-				//}
+				else
+				{
+					chess.IsFrezzed = true;
+				}
 
 				SwitchRound();
 			}
@@ -131,6 +131,11 @@ public class Controller : MonoBehaviour {
 
 	private void MoveChess(Chess chess, Grid grid)
 	{
+		foreach (Chess candidateChess in chess.Grid.Chesses)
+		{
+			candidateChess.IsFrezzed = false;
+		}
+
 		chess.Grid.Chesses.Remove(chess);
 		chess.Grid = grid;
 		grid.Chesses.Add(chess);
