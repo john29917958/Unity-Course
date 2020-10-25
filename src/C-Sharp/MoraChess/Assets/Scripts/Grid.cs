@@ -2,7 +2,7 @@
 using UnityEngine;
 
 public class Grid : MonoBehaviour {
-	public GameManager GameManager;
+	public Controller GameManager;
 
 	public int Row;
 	public int Column;
@@ -10,6 +10,6 @@ public class Grid : MonoBehaviour {
 
 	public void OnGridClicked()
 	{
-
+		GameManager.OnClick(this);
 	}
 }

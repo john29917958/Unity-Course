@@ -6,7 +6,7 @@ public class Chess : MonoBehaviour {
 	public enum Names { King, Paper, Sisers, Stone }
 	public enum Directions { Left, Right, Up, Down, LeftUp, RightUp, LeftDown, RightDown }
 
-	public GameManager GameManager;
+	public Controller GameManager;
 
 	public Names Name;
 	public Players Owner;
@@ -19,7 +19,7 @@ public class Chess : MonoBehaviour {
 
 	public void OnChessClicked()
 	{
-
+		GameManager.OnClick(this);
 	}
 
 	protected void Start()
