@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Controller : MonoBehaviour {
@@ -8,6 +7,7 @@ public class Controller : MonoBehaviour {
 	public Players RoundOwner = Players.Player1;
 	public RoundPhases Phase;
 	public Chess ActionChess;
+	public GameObject GameOverText;
 
 	public List<Queue> Queues = new List<Queue>();
 
@@ -62,7 +62,7 @@ public class Controller : MonoBehaviour {
 
 					if (chess.Name == Chess.Names.King)
 					{
-						//TODO: Ends game
+						GameOverText.SetActive(true);
 					}
 				}
 				//else
