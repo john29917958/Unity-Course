@@ -59,7 +59,16 @@ public class Controller : MonoBehaviour {
 					{
 						if (queue.Owner == RoundOwner) queue.AssignChess(chess);
 					}
-				}	
+
+					if (chess.Name == Chess.Names.King)
+					{
+						//TODO: Ends game
+					}
+				}
+				//else
+				//{
+				//	chess.IsFrezzed = true;
+				//}
 
 				SwitchRound();
 			}
