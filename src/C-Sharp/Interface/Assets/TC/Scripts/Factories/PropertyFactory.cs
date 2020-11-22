@@ -16,9 +16,9 @@ public static class PropertyFactory
         switch (characterType)
         {
             case CharacterTypes.Ashe:
-                return new Character_Ashe();
+                return new Ashe();
             case CharacterTypes.Yi:
-                return new Character_MasterYi();
+                return new MasterYi();
             default:
                 throw new ArgumentException("Unsupported character type \"" + characterType + "\"");
         }

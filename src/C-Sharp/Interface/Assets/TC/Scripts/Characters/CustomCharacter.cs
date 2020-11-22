@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [System.Serializable]
-public class Character_Custom : IProperty
+public class CustomCharacter : IProperty
 {
     [SerializeField]
     int _ad = 100;

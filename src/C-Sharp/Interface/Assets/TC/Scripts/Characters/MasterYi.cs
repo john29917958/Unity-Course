@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [System.Serializable]
-public class Character_MasterYi : IProperty
+public class MasterYi : IProperty
 {
     [SerializeField]
     int _ad = 100;
