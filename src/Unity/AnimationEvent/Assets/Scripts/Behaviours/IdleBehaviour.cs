@@ -12,11 +12,11 @@ public class IdleBehaviour : StateMachineBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            animator.SetTrigger("Jab");
+            animator.SetTrigger("LightAttack");
         }
         else if (Input.GetKeyDown(KeyCode.X))
         {
-            animator.SetTrigger("Hikick");
+            animator.SetTrigger("HeavyAttack");
         }
     }
 
