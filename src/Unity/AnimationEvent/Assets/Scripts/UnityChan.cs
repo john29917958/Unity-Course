@@ -2,6 +2,15 @@
 
 public class UnityChan : MonoBehaviour
 {
-	[HideInInspector]
-	public bool IsInComboSection;
+	public bool IsInComboSection { get; private set; }
+
+	public void ActivateComboSection()
+    {
+        IsInComboSection = true;
+    }
+
+    public void DisableComboSection()
+    {
+        IsInComboSection = false;
+    }
 }
