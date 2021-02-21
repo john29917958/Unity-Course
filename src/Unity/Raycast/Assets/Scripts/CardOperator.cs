@@ -29,9 +29,9 @@ public class CardOperator : MonoBehaviour
 			}
         }
 		else if (Input.GetMouseButton(0) && _selectedCard != null)
-        {			
+        {
 			Vector3 mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, _cardCanvas.planeDistance));
-			_selectedCard.CardContent.transform.position = new Vector3(_cardOriginPosition.x, mousePosition.y, mousePosition.z);
+			_selectedCard.CardContent.transform.position = new Vector3(mousePosition.x, mousePosition.y, mousePosition.z);
 		}
 		else if (Input.GetMouseButtonUp(0) && _selectedCard != null)
         {
@@ -44,7 +44,7 @@ public class CardOperator : MonoBehaviour
             }
 			else
             {
-				_selectedCard.CardContent.transform.position = _selectedCard.transform.position;				
+				_selectedCard.CardContent.transform.position = _cardOriginPosition;				
 			}
 
 			_selectedCard = null;

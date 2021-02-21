@@ -3,7 +3,7 @@
 public class Movement : MonoBehaviour
 {
 	public float Speed = 5;
-	public float RotationSpeed = 40;
+	public float RotationSpeed = 50;
 
 	// Update is called once per frame
 	private void FixedUpdate ()
