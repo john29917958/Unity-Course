@@ -1,8 +1,7 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class VirtualJoystick : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class VirtualJoystick : MonoBehaviour
 {
     public Vector2 Direction { get; private set; }
     public Action OnDragStarted;    
@@ -11,23 +10,40 @@ public class VirtualJoystick : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     public RectTransform JoyStickArea;
     public RectTransform Handler;
 
-    public void OnBeginDrag(PointerEventData eventData)
+    private int _pressedMouseButton;
+
+    public void StartDrag(int mouseButton)
     {
         if (OnDragStarted != null) OnDragStarted.Invoke();
-        Direction = GetDragDirection(eventData.position);
+        _pressedMouseButton = mouseButton;
+        Direction = GetDragDirection(Input.mousePosition);
     }
 
-    public void OnDrag(PointerEventData eventData)
+    private void Update()
     {
-        SetHandlerPosition(eventData.position);
-        Direction = GetDragDirection(eventData.position);
+        if (Input.GetMouseButtonUp(_pressedMouseButton))
+        {
+            EndDrag();
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            OnDrag(Input.mousePosition);
+        }
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+    public void EndDrag()
     {
         Handler.anchoredPosition = Vector2.zero;
         Direction = Vector2.zero;
         if (OnDragEnded != null) OnDragEnded.Invoke();
+        gameObject.SetActive(false);
+    }
+
+    private void OnDrag(Vector2 mousePosition)
+    {
+        SetHandlerPosition(mousePosition);
+        Direction = GetDragDirection(mousePosition);
     }
 
     private void SetHandlerPosition(Vector2 pointerPosition)

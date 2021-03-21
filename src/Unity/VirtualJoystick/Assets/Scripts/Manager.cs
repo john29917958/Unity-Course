@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Manager : MonoBehaviour
@@ -6,6 +7,7 @@ public class Manager : MonoBehaviour
 	public float MoveSpeed;
 	public VirtualJoystick Joystick;
 	public Image Character;
+	public EventSystem EventSystem;
 
 	private bool _isMoving;
 	
@@ -13,19 +15,16 @@ public class Manager : MonoBehaviour
     {
 		Joystick.OnDragStarted += delegate () { _isMoving = true; };
 		Joystick.OnDragEnded += delegate () { _isMoving = false; };
+		Joystick.EndDrag();
 	}
 
 	private void Update()
     {
 		if (Input.GetMouseButtonDown(0))
-        {
+        {			
 			Joystick.gameObject.SetActive(true);
 			Joystick.transform.position = Input.mousePosition;
-        }
-
-		if (Input.GetMouseButtonUp(0))
-        {
-			Joystick.gameObject.SetActive(false);
+			Joystick.StartDrag(0);
 		}
     }
 
