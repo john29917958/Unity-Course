@@ -9,6 +9,9 @@ public class Movement : MonoBehaviour
     private float _rotationSpeed;
 
     [SerializeField]
+    private float _sprintSpeed;
+
+    [SerializeField]
     private GameObject _player;
 
     [SerializeField]
@@ -19,7 +22,11 @@ public class Movement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Vector3 direction = transform.rotation.eulerAngles.normalized;
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _body.AddRelativeForce(Vector3.forward * _sprintSpeed, ForceMode.Impulse);
+        }
+
         Vector3 frontBackVelocity = Vector3.zero;
         Vector3 leftRightVelocity = Vector3.zero;
 
@@ -41,9 +48,12 @@ public class Movement : MonoBehaviour
             leftRightVelocity = transform.right;
         }
 
-        Vector3 velocity = (frontBackVelocity + leftRightVelocity).normalized * _moveSpeed * Time.fixedDeltaTime;
+        Vector3 velocity = (frontBackVelocity + leftRightVelocity).normalized * _moveSpeed;
 
-        _body.velocity = velocity;        
+        if (velocity.magnitude > 0)
+        {            
+            _body.velocity = velocity;
+        }
     }
 
     private void Update()
