@@ -1,25 +1,6 @@
-﻿// NativeCppLibrary.cpp : 定義 DLL 的匯出函式。
-//
-
-#include "pch.h"
+﻿#include "pch.h"
 #include "framework.h"
 #include "NativeCppLibrary.h"
-
-
-// 這是匯出變數的範例
-NATIVECPPLIBRARY_API int nNativeCppLibrary=0;
-
-// 這是匯出函式的範例。
-NATIVECPPLIBRARY_API int fnNativeCppLibrary(void)
-{
-    return 0;
-}
-
-// 這是已匯出的類別建構函式。
-CNativeCppLibrary::CNativeCppLibrary()
-{
-    return;
-}
 
 int displayNumber() {
     return 1;
