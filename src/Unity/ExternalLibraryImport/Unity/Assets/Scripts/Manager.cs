@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class Manager : MonoBehaviour
 {
-	[DllImport("NATIVECPPLIBRARY", EntryPoint = "displayNumber")]
+	[DllImport("NativeCppLibrary", EntryPoint = "displayNumber")]
 	public static extern int displayNumber();
 
-	[DllImport("NATIVECPPLIBRARY", EntryPoint = "getRandom")]
+	[DllImport("NativeCppLibrary", EntryPoint = "getRandom")]
 	public static extern int getRandom();
 
-	[DllImport("NATIVECPPLIBRARY", EntryPoint = "displaySum")]
+	[DllImport("NativeCppLibrary", EntryPoint = "displaySum")]
 	public static extern int displaySum();
 
 	// Use this for initialization
