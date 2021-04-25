@@ -100,8 +100,8 @@ public class HelloWorld : MonoBehaviourPunCallbacks
         string message = string.Empty;
 
         foreach (RoomInfo room in roomList)
-        {
-            message += "Name: " + room.Name + " | PlayerCount: " + room.PlayerCount + " | MaxPlayers: " + room.MaxPlayers + " | IsOpen: " + room.IsOpen + " | IsVisible: " + room.IsVisible + " | RemovedFromList: " + room.RemovedFromList + " | MasterClientId: " + room.masterClientId + Environment.NewLine;
+        {            
+            message += "Name: " + room.Name + " | PlayerCount: " + room.PlayerCount + " | MaxPlayers: " + room.MaxPlayers + " | IsOpen: " + room.IsOpen + " | IsVisible: " + room.IsVisible + " | RemovedFromList: " + room.RemovedFromList + " | MasterClientId: " + room.masterClientId + " | Custom properties: " + JsonUtility.ToJson(room.CustomProperties) + Environment.NewLine;
         }
 
         Debug.Log("Room list updated:" + Environment.NewLine + message);
@@ -118,13 +118,13 @@ public class HelloWorld : MonoBehaviourPunCallbacks
     {
         Debug.Log("New player entered: " + Environment.NewLine
             + "User ID: " + newPlayer.UserId
-            + "Nick name: " + newPlayer.NickName
-            + "Actor number: " + newPlayer.ActorNumber
-            + "Is master client: " + newPlayer.IsMasterClient
-            + "Is local: " + newPlayer.IsLocal
-            + "Has rejoined: " + newPlayer.HasRejoined
-            + "Custom properties: " + newPlayer.CustomProperties
-            + "Tag object: " + newPlayer.TagObject
+            + " | Nick name: " + newPlayer.NickName
+            + " | Actor number: " + newPlayer.ActorNumber
+            + " | Is master client: " + newPlayer.IsMasterClient
+            + " | Is local: " + newPlayer.IsLocal
+            + " | Has rejoined: " + newPlayer.HasRejoined
+            + " | Custom properties: " + newPlayer.CustomProperties
+            + " | Tag object: " + newPlayer.TagObject
         );
     }
 
@@ -132,13 +132,13 @@ public class HelloWorld : MonoBehaviourPunCallbacks
     {
         Debug.Log("Player left: " + Environment.NewLine
             + "User ID: " + otherPlayer.UserId
-            + "Nick name: " + otherPlayer.NickName
-            + "Actor number: " + otherPlayer.ActorNumber
-            + "Is master client: " + otherPlayer.IsMasterClient
-            + "Is local: " + otherPlayer.IsLocal
-            + "Has rejoined: " + otherPlayer.HasRejoined
-            + "Custom properties: " + otherPlayer.CustomProperties
-            + "Tag object: " + otherPlayer.TagObject
+            + " | Nick name: " + otherPlayer.NickName
+            + " | Actor number: " + otherPlayer.ActorNumber
+            + " | Is master client: " + otherPlayer.IsMasterClient
+            + " | Is local: " + otherPlayer.IsLocal
+            + " | Has rejoined: " + otherPlayer.HasRejoined
+            + " | Custom properties: " + otherPlayer.CustomProperties
+            + " | Tag object: " + otherPlayer.TagObject
         );
     }
 
@@ -146,14 +146,14 @@ public class HelloWorld : MonoBehaviourPunCallbacks
     {
         Debug.Log("Player's property updated: " + Environment.NewLine
             + "User ID: " + targetPlayer.UserId
-            + "Nick name: " + targetPlayer.NickName
-            + "Actor number: " + targetPlayer.ActorNumber
-            + "Is master client: " + targetPlayer.IsMasterClient
-            + "Is local: " + targetPlayer.IsLocal
-            + "Has rejoined: " + targetPlayer.HasRejoined
-            + "Custom properties: " + targetPlayer.CustomProperties
-            + "Tag object: " + targetPlayer.TagObject
-            + "Changed properties: " + JsonUtility.ToJson(changedProps)
+            + " | Nick name: " + targetPlayer.NickName
+            + " | Actor number: " + targetPlayer.ActorNumber
+            + " | Is master client: " + targetPlayer.IsMasterClient
+            + " | Is local: " + targetPlayer.IsLocal
+            + " | Has rejoined: " + targetPlayer.HasRejoined
+            + " | Custom properties: " + targetPlayer.CustomProperties
+            + " | Tag object: " + targetPlayer.TagObject
+            + " | Changed properties: " + JsonUtility.ToJson(changedProps)
         );
     }
 
@@ -166,9 +166,9 @@ public class HelloWorld : MonoBehaviourPunCallbacks
     #region IMatchmakingCallbacks
     public override void OnFriendListUpdate(List<FriendInfo> friendList)
     {
-        string message = string.Empty;
+        string message = string.Empty;        
 
-        foreach(FriendInfo friendInfo in friendList)
+        foreach (FriendInfo friendInfo in friendList)
         {
             message += "User ID: " + friendInfo.UserId + " | Name: " + friendInfo.Name + " | Is online: " + friendInfo.IsOnline + " | Is in room: " + friendInfo.IsInRoom + " | Room: " + friendInfo.Room + Environment.NewLine;
         }
@@ -202,13 +202,14 @@ public class HelloWorld : MonoBehaviourPunCallbacks
         Debug.Log("Left a room");
         SwitchToPage(RoomsPage);
     }
-    #endregion
+    #endregion   
 
     public void Connect()
     {
         if (!PhotonNetwork.IsConnected)
         {
-            PhotonNetwork.NickName = NickNameInput.text;
+            PhotonNetwork.NickName = NickNameInput.text;            
+            PhotonNetwork.AuthValues = new AuthenticationValues(NickNameInput.text);
             PhotonNetwork.ConnectUsingSettings();
         }
     }
@@ -235,6 +236,11 @@ public class HelloWorld : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveLobby();
     }
 
+    public void GetRoomList()
+    {
+        PhotonNetwork.GetCustomRoomList(new TypedLobby(LobbyNameInput.text, LobbyType.SqlLobby), "C0 = 'Default'");
+    }
+
     public void JoinRoom()
     {
         if (string.IsNullOrWhiteSpace(RoomNameInput.text))
@@ -251,8 +257,8 @@ public class HelloWorld : MonoBehaviourPunCallbacks
             options.PlayerTtl = 3000;
             options.CleanupCacheOnLeave = false;
             options.DeleteNullProperties = false;
-            options.CustomRoomProperties = new Hashtable { { "WelcomeMessage", "Hello" } };
-            options.CustomRoomPropertiesForLobby = new string[] { "WelcomeMessage" };
+            options.CustomRoomProperties = new Hashtable { { "C0", "Default" } };
+            options.CustomRoomPropertiesForLobby = new string[] { "C0" };
             TypedLobby lobbyType = new TypedLobby(LobbyNameInput.text, LobbyType.SqlLobby);
 
             if (PhotonNetwork.JoinOrCreateRoom(RoomNameInput.text, options, lobbyType))
@@ -269,6 +275,11 @@ public class HelloWorld : MonoBehaviourPunCallbacks
     public void LeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
+    }
+
+    public void FindFriends()
+    {
+        PhotonNetwork.FindFriends(new[] { "TC", "Laura", "John" });
     }
 
     private void Start()
