@@ -2370,7 +2370,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1342583435}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 578e0e0837d003e42b72f6423acdd0d9, type: 3}
+  m_Script: {fileID: 11500000, guid: ba06bae97577ef741b034d3288b558b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Pages:
