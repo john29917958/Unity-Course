@@ -19,12 +19,12 @@ public class HelloWorld : MonoBehaviourPunCallbacks
     public GameObject RoomsPage;
     public InputField RoomNameInput;
 
-    public GameObject RoomPage;
+    public GameObject RoomPage;   
 
     #region IConnectionCallbacks
     public override void OnConnected()
     {
-        Debug.Log("Connected to Photon");
+        Debug.Log("Connected to Photon (" + PhotonNetwork.CloudRegion + ')');
 
         if (PhotonNetwork.InLobby)
         {
@@ -208,9 +208,14 @@ public class HelloWorld : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.IsConnected)
         {
-            PhotonNetwork.NickName = NickNameInput.text;            
+            PhotonNetwork.AutomaticallySyncScene = false;
             PhotonNetwork.AuthValues = new AuthenticationValues(NickNameInput.text);
-            PhotonNetwork.ConnectUsingSettings();
+            PhotonNetwork.NickName = NickNameInput.text;
+            PhotonNetwork.GameVersion = Application.version;
+            PhotonNetwork.NetworkingClient.AppId = PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime;
+            //PhotonNetwork.ConnectUsingSettings();
+            //PhotonNetwork.ConnectToRegion("asia");
+            PhotonNetwork.ConnectToBestCloudServer();            
         }
     }
 
