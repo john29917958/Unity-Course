@@ -19,6 +19,7 @@ public class HelloWorld : MonoBehaviourPunCallbacks
 
     public GameObject RoomsPage;
     public InputField RoomNameInput;
+    public RoomList RoomList;
 
     public GameObject RoomPage;   
 
@@ -76,6 +77,7 @@ public class HelloWorld : MonoBehaviourPunCallbacks
     {
         Debug.Log("Joined to lobby: " + PhotonNetwork.CurrentLobby.Name);
         SwitchToPage(RoomsPage);
+        GetRoomList();
     }
 
     public override void OnLeftLobby()
@@ -105,10 +107,16 @@ public class HelloWorld : MonoBehaviourPunCallbacks
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         string message = string.Empty;
+        RoomList.Clear();
 
         foreach (RoomInfo room in roomList)
-        {            
+        {
             message += "Name: " + room.Name + " | PlayerCount: " + room.PlayerCount + " | MaxPlayers: " + room.MaxPlayers + " | IsOpen: " + room.IsOpen + " | IsVisible: " + room.IsVisible + " | RemovedFromList: " + room.RemovedFromList + " | MasterClientId: " + room.masterClientId + " | Custom properties: " + JsonUtility.ToJson(room.CustomProperties) + Environment.NewLine;
+
+            if (room.IsVisible)
+            {
+                RoomList.AddRoom(room.Name, room.PlayerCount, room.MaxPlayers, room.IsOpen);
+            }            
         }
 
         Debug.Log("Room list updated:" + Environment.NewLine + message);
@@ -196,7 +204,7 @@ public class HelloWorld : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("Joined a room");
-        SwitchToPage(RoomPage);
+        SwitchToPage(RoomPage);        
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
@@ -242,7 +250,7 @@ public class HelloWorld : MonoBehaviourPunCallbacks
         else
         {
             PhotonNetwork.JoinLobby(new TypedLobby(LobbyNameInput.text, LobbyType.SqlLobby));
-        }
+        }        
     }
 
     public void LeaveLobby()
@@ -252,7 +260,7 @@ public class HelloWorld : MonoBehaviourPunCallbacks
 
     public void GetRoomList()
     {
-        PhotonNetwork.GetCustomRoomList(new TypedLobby(LobbyNameInput.text, LobbyType.SqlLobby), "C0 = 'Default'");
+        PhotonNetwork.GetCustomRoomList(new TypedLobby(PhotonNetwork.CurrentLobby.Name, LobbyType.SqlLobby), "C0 LIKE '%'");
     }
 
     public void JoinRoom()
@@ -269,7 +277,7 @@ public class HelloWorld : MonoBehaviourPunCallbacks
             options.IsVisible = true;
             options.EmptyRoomTtl = 3000;
             options.PlayerTtl = 3000;
-            options.CleanupCacheOnLeave = false;
+            options.CleanupCacheOnLeave = true;
             options.DeleteNullProperties = false;
             options.CustomRoomProperties = new Hashtable { { "C0", "Default" } };
             options.CustomRoomPropertiesForLobby = new string[] { "C0" };
