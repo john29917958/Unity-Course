@@ -15,6 +15,7 @@ public class HelloWorld : MonoBehaviourPunCallbacks
 
     public GameObject LobbiesPage;
     public InputField LobbyNameInput;
+    public LobbyList LobbyList;
 
     public GameObject RoomsPage;
     public InputField RoomNameInput;
@@ -86,10 +87,16 @@ public class HelloWorld : MonoBehaviourPunCallbacks
     public override void OnLobbyStatisticsUpdate(List<TypedLobbyInfo> lobbyStatistics)
     {
         string message = string.Empty;
+        LobbyList.Clear();
 
         foreach (TypedLobbyInfo lobbyInfo in lobbyStatistics)
         {
             message += "Lobby name: " + lobbyInfo.Name + " | Lobby type: " + lobbyInfo.Type + " | Player count: " + lobbyInfo.PlayerCount + " | Is Default: " + lobbyInfo.IsDefault + " | Info: " + lobbyInfo.ToString();
+
+            if (!string.IsNullOrWhiteSpace(lobbyInfo.Name))
+            {
+                LobbyList.AddLobby(lobbyInfo.Name, lobbyInfo.Type.ToString(), lobbyInfo.PlayerCount, lobbyInfo.RoomCount);
+            }
         }
 
         Debug.Log("Lobby updated" + Environment.NewLine + message);
@@ -213,9 +220,11 @@ public class HelloWorld : MonoBehaviourPunCallbacks
             PhotonNetwork.NickName = NickNameInput.text;
             PhotonNetwork.GameVersion = Application.version;
             PhotonNetwork.NetworkingClient.AppId = PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime;
+            PhotonNetwork.NetworkingClient.EnableLobbyStatistics = true;
+            PhotonNetwork.PhotonServerSettings.AppSettings.EnableLobbyStatistics = true;
             //PhotonNetwork.ConnectUsingSettings();
-            //PhotonNetwork.ConnectToRegion("asia");
-            PhotonNetwork.ConnectToBestCloudServer();            
+            PhotonNetwork.ConnectToRegion("jp");
+            //PhotonNetwork.ConnectToBestCloudServer();
         }
     }
 
