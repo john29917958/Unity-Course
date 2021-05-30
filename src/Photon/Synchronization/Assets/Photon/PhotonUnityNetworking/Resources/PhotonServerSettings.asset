@@ -25,7 +25,7 @@ MonoBehaviour:
     Protocol: 0
     EnableProtocolFallback: 1
     AuthMode: 0
-    EnableLobbyStatistics: 0
+    EnableLobbyStatistics: 1
     NetworkLogging: 1
   DevRegion: jp
   PunLogging: 0
@@ -38,6 +38,10 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
+  - SendMessage
+  - SendMessageAsync
+  - OnReceiveMessage
+  - Send
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 0

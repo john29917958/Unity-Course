@@ -194,7 +194,7 @@ GameObject:
   - component: {fileID: 316634321}
   - component: {fileID: 316634320}
   m_Layer: 5
-  m_Name: Button
+  m_Name: LoginButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -470,7 +470,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Login
 --- !u!222 &538816264
 CanvasRenderer:
   m_ObjectHideFlags: 0

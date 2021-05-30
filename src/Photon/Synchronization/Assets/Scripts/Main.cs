@@ -45,10 +45,4 @@ public class Main : MonoBehaviourPunCallbacks
             PhotonNetwork.ConnectToRegion("jp");
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
