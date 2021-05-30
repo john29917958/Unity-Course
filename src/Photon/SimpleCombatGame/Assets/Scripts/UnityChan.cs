@@ -1,13 +1,21 @@
 ﻿using UnityEngine;
 
-public class ChanHandler : MonoBehaviour
+public class UnityChan : MonoBehaviour
 {
+    public int Health { get; private set; } = 100;
+
     [SerializeField] private Animator _animator;
 
     [SerializeField] private Rigidbody _body;
 
+    public void TakeDamage(int value)
+    {
+        Health -= value;
+        if (value < 0) value = 0;
+    }
+
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.C))
         {

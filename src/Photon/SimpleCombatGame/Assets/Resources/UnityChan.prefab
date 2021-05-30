@@ -5535,6 +5535,8 @@ GameObject:
   - component: {fileID: 2969061711505190611}
   - component: {fileID: 2969061711505190621}
   - component: {fileID: 2969061711505190610}
+  - component: {fileID: 114112648076704864}
+  - component: {fileID: 114869140378077304}
   m_Layer: 0
   m_Name: UnityChan
   m_TagString: Untagged
@@ -5621,6 +5623,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 2969061711321314608}
   _body: {fileID: 2969061711505190611}
+--- !u!114 &114112648076704864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2969061711313913782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 114869140378077304}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &114869140378077304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2969061711313913782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 1
+  m_TeleportEnabled: 1
+  m_TeleportIfDistanceGreaterThan: 5
 --- !u!1 &2969061711313913784
 GameObject:
   m_ObjectHideFlags: 0
