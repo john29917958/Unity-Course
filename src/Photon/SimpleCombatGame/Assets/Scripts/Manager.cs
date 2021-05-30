@@ -19,6 +19,7 @@ public class Manager : MonoBehaviour
             MyPosition = position;
             GameObject chan = PhotonNetwork.Instantiate(ChanPrefab.name, position.transform.position, Quaternion.Euler(0, 90, 0));
             chan.GetComponent<UnityChan>().OwnerPhotonPlayer = PhotonNetwork.LocalPlayer;
+            chan.GetComponent<UnityChan>().Reverse = false;
         }
         else
         {
@@ -27,6 +28,7 @@ public class Manager : MonoBehaviour
             MyPosition = position;
             GameObject chan = PhotonNetwork.Instantiate(ChanPrefab.name, position.transform.position, Quaternion.Euler(0, -90, 0));
             chan.GetComponent<UnityChan>().OwnerPhotonPlayer = PhotonNetwork.LocalPlayer;
+            chan.GetComponent<UnityChan>().Reverse = true;
         }
 
         return;
