@@ -11,7 +11,10 @@ public class EventManager : MonoBehaviour
     public GameObject PhotonObject;
     public InputField Input;
     public Text MessageHistory;
+    public Dropdown ChannelDropdown;
+    public InputField PlayerInput;
 
+    private int _originChannel = 0;
     private List<GameObject> _objectPool;
 
     private void Start()
@@ -36,13 +39,39 @@ public class EventManager : MonoBehaviour
         Debug.Log("After clean: " + _objectPool.Count);
     }
 
+    public void RegisterChannel()
+    {
+        int channel = Convert.ToInt32(ChannelDropdown.itemText.text);
+
+        if (_originChannel != 0) PhotonNetwork.SetInterestGroups(Convert.ToByte(_originChannel), false);
+        PhotonNetwork.SetInterestGroups(Convert.ToByte(channel), true);
+
+        _originChannel = channel;
+    }
+
     [PunRPC]
     public void Send()
     {
         PhotonNetwork.RunRpcCoroutines = true;
         PhotonView photon = PhotonView.Get(this);
         Player player = PhotonNetwork.LocalPlayer;
-        photon.RPC("OnReceiveMessage", RpcTarget.All, player.NickName, Input.text);
+
+        if (!string.IsNullOrWhiteSpace(PlayerInput.text))
+        {
+            foreach (Player other in PhotonNetwork.PlayerListOthers)
+            {
+                if (other.NickName == PlayerInput.text)
+                {
+                    photon.RpcSecure("OnReceiveMessage", other, true, player.NickName, Input.text);
+                    MessageHistory.text += Environment.NewLine + player.NickName + " - " + Input.text;
+                }
+            }
+        }
+        else
+        {
+            photon.RPC("OnReceiveMessage", RpcTarget.All, player.NickName, Input.text);
+        }
+        
         Input.text = string.Empty;
     }
 
