@@ -1,8 +1,12 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using Photon.Realtime;
+using UnityEngine;
 
 public class UnityChan : MonoBehaviour
 {
     public int Health { get; private set; } = 100;
+
+    public Player OwnerPhotonPlayer;
 
     [SerializeField] private Animator _animator;
 
@@ -17,6 +21,8 @@ public class UnityChan : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if (!PhotonNetwork.LocalPlayer.Equals(OwnerPhotonPlayer)) return;
+
         if (Input.GetKeyDown(KeyCode.C))
         {
             _animator.SetTrigger("Jab");

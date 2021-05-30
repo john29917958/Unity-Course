@@ -5537,6 +5537,7 @@ GameObject:
   - component: {fileID: 2969061711505190610}
   - component: {fileID: 114112648076704864}
   - component: {fileID: 114869140378077304}
+  - component: {fileID: 114445409711838168}
   m_Layer: 0
   m_Name: UnityChan
   m_TagString: Untagged
@@ -5573,7 +5574,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 53383c83dfcb60e49ae25d068c254028, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -5643,6 +5644,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 114869140378077304}
+  - {fileID: 114445409711838168}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -5662,6 +5664,54 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 5
+--- !u!114 &114445409711838168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2969061711313913782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 9
+    SynchronizeType: 1
+    Name: Jab
+  - Type: 9
+    SynchronizeType: 1
+    Name: Hikick
+  - Type: 9
+    SynchronizeType: 1
+    Name: Spinkick
+  - Type: 9
+    SynchronizeType: 1
+    Name: Rising_P
+  - Type: 9
+    SynchronizeType: 1
+    Name: Headspring
+  - Type: 9
+    SynchronizeType: 1
+    Name: Land
+  - Type: 4
+    SynchronizeType: 1
+    Name: Run
+  - Type: 9
+    SynchronizeType: 1
+    Name: ScrewK
+  - Type: 9
+    SynchronizeType: 1
+    Name: DamageDown
+  - Type: 9
+    SynchronizeType: 1
+    Name: SAMK
+  m_SynchronizeLayers:
+  - SynchronizeType: 1
+    LayerIndex: 0
 --- !u!1 &2969061711313913784
 GameObject:
   m_ObjectHideFlags: 0
