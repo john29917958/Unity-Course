@@ -5714,28 +5714,28 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: Jab
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 0
     Name: Hikick
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 0
     Name: Spinkick
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 0
     Name: Rising_P
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: Headspring
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 0
     Name: Land
   - Type: 4
     SynchronizeType: 1
     Name: Run
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 0
     Name: ScrewK
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: DamageDown
   - Type: 9
     SynchronizeType: 1

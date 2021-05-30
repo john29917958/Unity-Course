@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class UnityChan : MonoBehaviour
 {
+    public enum Attacker { None, Head, RightHand, LeftHand, RightFoot, LeftFoot }
+
     public int Health { get; private set; } = 100;
 
     public Player OwnerPhotonPlayer;
@@ -23,16 +25,31 @@ public class UnityChan : MonoBehaviour
     {
         Health -= value;
         if (value < 0) value = 0;
+
+        Debug.Log(PhotonNetwork.LocalPlayer.NickName + ": " + Health);
+        _animator.SetTrigger("DamageDown");
     }
 
-    public void AttackJudgeOpen()
+    public void FistAttackStart(Attacker attacker)
     {
         IsAttacking = true;
-        _rightFist.enabled = true;
-        _LeftFist.enabled = true;
+
+        switch (attacker)
+        {
+            case Attacker.RightHand:
+                _rightFist.enabled = true;
+                break;
+            case Attacker.LeftHand:
+                _LeftFist.enabled = true;
+                break;
+            default:
+                _rightFist.enabled = true;
+                _LeftFist.enabled = true;
+                break;
+        }
     }
 
-    public void AttackJudgeEnd()
+    public void FistAttackEnd()
     {
         IsAttacking = false;
         _rightFist.enabled = false;
@@ -54,7 +71,7 @@ public class UnityChan : MonoBehaviour
         else if (Input.GetKeyDown(backward))
         {
             _animator.SetTrigger("SAMK");
-            transform.Translate(Vector3.back * 10 * Time.deltaTime);
+            transform.Translate(Vector3.back * 50 * Time.deltaTime);
         }
         else
         {
@@ -74,9 +91,11 @@ public class UnityChan : MonoBehaviour
     {
         if (IsAttacking)
         {
-            Debug.Log("Hi");
             _rightFist.enabled = false;
             _LeftFist.enabled = false;
+            IsAttacking = false;
+            UnityChan chan = col.GetComponent<UnityChan>();
+            if (chan != null) chan.TakeDamage(10);
         }
     }
 }
