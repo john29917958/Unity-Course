@@ -17,6 +17,8 @@ public class EventManager : MonoBehaviour
     private int _originChannel = 0;
     private List<GameObject> _objectPool;
 
+    private bool _createFlag;
+
     private void Start()
     {
         _objectPool = new List<GameObject>();
@@ -24,7 +26,8 @@ public class EventManager : MonoBehaviour
 
     public void CreateCube()
     {
-        GameObject obj = PhotonNetwork.Instantiate(PhotonObject.name, Vector3.zero, Quaternion.identity, 0, new object[] {"Hi", 123});
+        _createFlag = !_createFlag;
+        GameObject obj = PhotonNetwork.Instantiate(PhotonObject.name + (_createFlag ? string.Empty : "2"), Vector3.zero, Quaternion.identity, 0, new object[] {"Hi", 123});
         _objectPool.Add(obj);
     }
 

@@ -16,10 +16,10 @@ GameObject:
   - component: {fileID: 8922393539782578736}
   - component: {fileID: 8922393539782578737}
   - component: {fileID: 8922393539782578750}
-  - component: {fileID: 114200395458821900}
+  - component: {fileID: 114850527749125874}
   - component: {fileID: 114152926744469058}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Cube2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -170,7 +170,7 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 10
---- !u!114 &114200395458821900
+--- !u!114 &114850527749125874
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8922393539782578751}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f319a46921f3ee34283851b2098fb0d1, type: 3}
+  m_Script: {fileID: 11500000, guid: 686b760358f61e2469391ae2bcfded56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114152926744469058
