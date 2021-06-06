@@ -3,7 +3,7 @@ using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OnwerShip : MonoBehaviourPunCallbacks, IPunOwnershipCallbacks
+public class OnwerShip : MonoBehaviourPunCallbacks, IPunOwnershipCallbacks, IOnPhotonViewOwnerChange
 {
     [SerializeField] private Button _allowTakeOverButton;
     [SerializeField] private Button _rejectTakeOverButton;
@@ -13,6 +13,8 @@ public class OnwerShip : MonoBehaviourPunCallbacks, IPunOwnershipCallbacks
 
     private void Start()
     {
+        //PhotonNetwork.AddCallbackTarget(this);
+        //PhotonNetwork.NetworkingClient.AddCallbackTarget(this);
         _allowTakeOverButton.gameObject.SetActive(false);
         _rejectTakeOverButton.gameObject.SetActive(false);
     }
@@ -65,11 +67,16 @@ public class OnwerShip : MonoBehaviourPunCallbacks, IPunOwnershipCallbacks
 
     public void OnOwnershipTransfered(PhotonView targetView, Player previousOwner)
     {
-        Debug.Log("Ownership transferred to: " + PhotonNetwork.LocalPlayer.NickName);
+        Debug.Log("Ownership transferred from " + previousOwner.NickName + " to: " + targetView.Owner.NickName);
     }
 
     public void OnOwnershipTransferFailed(PhotonView targetView, Player senderOfFailedRequest)
     {
         Debug.Log(senderOfFailedRequest.NickName + " failed to take ownership");
+    }
+
+    public void OnOwnerChange(Player newOwner, Player previousOwner)
+    {
+        Debug.Log("Ownership transferred from " + previousOwner.NickName + " to " + newOwner.NickName);
     }
 }
