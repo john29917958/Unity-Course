@@ -1,23 +1,66 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class OnwerShip : MonoBehaviour, IPunOwnershipCallbacks
+public class OnwerShip : MonoBehaviourPunCallbacks, IPunOwnershipCallbacks
 {
-    [SerializeField] private PhotonView _view;
+    [SerializeField] private Button _allowTakeOverButton;
+    [SerializeField] private Button _rejectTakeOverButton;
+    
+    private bool _isConfirmed;
+    private bool _isAllow;
 
-    public void RequestOwnership()
+    private void Start()
     {
-        Debug.Log("Taking ownership");
-        _view.RequestOwnership();
+        _allowTakeOverButton.gameObject.SetActive(false);
+        _rejectTakeOverButton.gameObject.SetActive(false);
+    }
+
+    public void ConfirmOwnership(bool isAllow, PhotonView targetView, Player requestingPlayer)
+    {
+        _isConfirmed = true;
+        _isAllow = isAllow;
+
+        _allowTakeOverButton.gameObject.SetActive(false);
+        _rejectTakeOverButton.gameObject.SetActive(false);
+
+        if (_isAllow)
+        {
+            targetView.TransferOwnership(requestingPlayer);
+        }
+    }
+
+    public void RequestOwnership(PhotonView view)
+    {
+        if (view.IsMine)
+        {
+            Debug.Log("Already mine");
+        }
+        else
+        {
+            Debug.Log("Taking ownership");
+            view.RequestOwnership();
+        }
     }
 
     public void OnOwnershipRequest(PhotonView targetView, Player requestingPlayer)
     {
-        if (true)
+        if (!targetView.IsMine) return;
+
+        _isConfirmed = false;
+        _allowTakeOverButton.gameObject.SetActive(true);
+        _rejectTakeOverButton.gameObject.SetActive(true);
+        _allowTakeOverButton.onClick.RemoveAllListeners();
+        _rejectTakeOverButton.onClick.RemoveAllListeners();
+        _allowTakeOverButton.onClick.AddListener(() =>
         {
-            targetView.TransferOwnership(requestingPlayer);
-        }
+            ConfirmOwnership(true, targetView, requestingPlayer);
+        });
+        _rejectTakeOverButton.onClick.AddListener(() =>
+        {
+            ConfirmOwnership(false, targetView, requestingPlayer);
+        });
     }
 
     public void OnOwnershipTransfered(PhotonView targetView, Player previousOwner)
