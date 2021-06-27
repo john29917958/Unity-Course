@@ -66,7 +66,7 @@ public class UnityChan : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C))
         {
             _animator.SetTrigger("Jab");
-            transform.Translate(Vector3.forward * 10 * Time.deltaTime);
+            //transform.Translate(Vector3.forward * 10 * Time.deltaTime);
         }
         else if (Input.GetKeyDown(backward))
         {
