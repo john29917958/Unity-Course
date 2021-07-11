@@ -37,6 +37,7 @@ public class UnityChan : MonoBehaviour, IPunInstantiateMagicCallback, IPunObserv
 
         Debug.Log(PhotonNetwork.LocalPlayer.NickName + ": " + Health);
         _animator.SetTrigger("DamageDown");
+        _body.AddRelativeForce(Vector3.back * 30, ForceMode.Impulse);
     }
 
     public void FistAttackStart(Attacker attacker)
@@ -63,6 +64,7 @@ public class UnityChan : MonoBehaviour, IPunInstantiateMagicCallback, IPunObserv
         IsAttacking = false;
         _rightFist.enabled = false;
         _LeftFist.enabled = false;
+        _body.velocity = Vector3.zero;
     }
 
     // Update is called once per frame
@@ -74,15 +76,15 @@ public class UnityChan : MonoBehaviour, IPunInstantiateMagicCallback, IPunObserv
         KeyCode forward = Reverse ? KeyCode.LeftArrow : KeyCode.RightArrow;
         KeyCode backward = Reverse ? KeyCode.RightArrow : KeyCode.LeftArrow;
 
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C) && _animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
             _animator.SetTrigger("Jab");
-            //transform.Translate(Vector3.forward * 10 * Time.deltaTime);
+            _body.AddRelativeForce(Vector3.forward * 2.5f, ForceMode.VelocityChange);
         }
-        else if (Input.GetKeyDown(backward))
+        else if (Input.GetKeyDown(backward) && !_animator.GetCurrentAnimatorStateInfo(0).IsName("SAMK"))
         {
             _animator.SetTrigger("SAMK");
-            transform.Translate(Vector3.back * 50 * Time.deltaTime);
+            _body.AddRelativeForce(Vector3.back * 40, ForceMode.Impulse);
         }
         else
         {
