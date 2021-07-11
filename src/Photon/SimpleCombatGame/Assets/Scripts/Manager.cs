@@ -14,7 +14,7 @@ public class Manager : MonoBehaviour
         {
             GameObject position = PlayerPositions[0];
             MyPosition = position;
-            GameObject chan = PhotonNetwork.Instantiate(ChanPrefab.name, position.transform.position, Quaternion.Euler(0, 90, 0));
+            GameObject chan = PhotonNetwork.Instantiate(ChanPrefab.name, position.transform.position, Quaternion.Euler(0, 90, 0), 0, new object[] { "Health1" });
             chan.GetComponent<UnityChan>().OwnerPhotonPlayer = PhotonNetwork.LocalPlayer;
             chan.GetComponent<UnityChan>().Reverse = false;
         }
@@ -22,7 +22,7 @@ public class Manager : MonoBehaviour
         {
             GameObject position = PlayerPositions[1];
             MyPosition = position;
-            GameObject chan = PhotonNetwork.Instantiate(ChanPrefab.name, position.transform.position, Quaternion.Euler(0, -90, 0));
+            GameObject chan = PhotonNetwork.Instantiate(ChanPrefab.name, position.transform.position, Quaternion.Euler(0, -90, 0), 0, new object[] { "Health2" });
             chan.GetComponent<UnityChan>().OwnerPhotonPlayer = PhotonNetwork.LocalPlayer;
             chan.GetComponent<UnityChan>().Reverse = true;
         }

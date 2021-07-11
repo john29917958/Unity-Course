@@ -1,12 +1,18 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class UnityChan : MonoBehaviour
+public class UnityChan : MonoBehaviour, IPunInstantiateMagicCallback, IPunObservable
 {
+    [SerializeField]
+    private PhotonView _view;
+
     public enum Attacker { None, Head, RightHand, LeftHand, RightFoot, LeftFoot }
 
     public int Health { get; private set; } = 100;
+
+    private Text _healthText;
 
     public Player OwnerPhotonPlayer;
 
@@ -23,6 +29,9 @@ public class UnityChan : MonoBehaviour
 
     public void TakeDamage(int value)
     {
+        Debug.Log(_view.Owner.NickName + "'s TakeDamage()");
+        if (!_view.IsMine) return;
+
         Health -= value;
         if (value < 0) value = 0;
 
@@ -59,7 +68,9 @@ public class UnityChan : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (!PhotonNetwork.LocalPlayer.Equals(OwnerPhotonPlayer)) return;
+        _healthText.text = Health.ToString();
+
+        if (!_view.IsMine) return;
         KeyCode forward = Reverse ? KeyCode.LeftArrow : KeyCode.RightArrow;
         KeyCode backward = Reverse ? KeyCode.RightArrow : KeyCode.LeftArrow;
 
@@ -78,7 +89,7 @@ public class UnityChan : MonoBehaviour
             if (Input.GetKey(forward))
             {
                 _animator.SetBool("Run", true);
-                transform.Translate(Vector3.forward * 1 * Time.deltaTime);
+                transform.Translate(Vector3.forward * 3 * Time.deltaTime);
             }
             else
             {
@@ -89,13 +100,46 @@ public class UnityChan : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
-        if (IsAttacking)
+        // Always check attacked event at victim's side.
+        if (IsAttacking && !_view.IsMine)
         {
             _rightFist.enabled = false;
             _LeftFist.enabled = false;
             IsAttacking = false;
             UnityChan chan = col.GetComponent<UnityChan>();
             if (chan != null) chan.TakeDamage(10);
+        }
+    }
+
+    public void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        if (info.photonView.InstantiationData.Length == 0) return;
+        Debug.Log(_view.Owner.NickName + "'s window, and " + info.Sender.NickName + " is initialized");
+        _healthText = GameObject.FindWithTag(info.photonView.InstantiationData[0].ToString()).GetComponent<Text>();
+
+        Debug.Log(_view.Owner.NickName + "'s help text: " + _healthText.name);
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsReading)
+        {
+            object data = stream.ReceiveNext();
+            UnityChanArgs args = JsonUtility.FromJson<UnityChanArgs>(data.ToString());
+            Health = args.Health;
+            IsAttacking = args.IsAttacking;
+        }
+
+        if (stream.IsWriting)
+        {
+            UnityChanArgs args = new UnityChanArgs
+            {
+                Health = Health,
+                IsAttacking = IsAttacking
+            };
+
+            string json = JsonUtility.ToJson(args);
+            stream.SendNext(json);
         }
     }
 }
